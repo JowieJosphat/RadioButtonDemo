@@ -1,0 +1,159 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+
+public class RadioButtonDemo extends JFrame implements ActionListener {
+
+    private JRadioButton birdBtn, catBtn, dogBtn, rabbitBtn, pigBtn;
+    private JLabel imageLabel;
+    private ButtonGroup group;
+
+    private ImageIcon birdIcon, catIcon, dogIcon, rabbitIcon, pigIcon;
+
+    public RadioButtonDemo() {
+        setTitle("RadioButtonDemo");
+        setSize(450, 250);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(10, 10));
+
+        birdBtn = new JRadioButton("Bird");
+        catBtn = new JRadioButton("Cat");
+        dogBtn = new JRadioButton("Dog");
+        rabbitBtn = new JRadioButton("Rabbit");
+        pigBtn = new JRadioButton("Pig");
+
+        group = new ButtonGroup();
+        group.add(birdBtn); group.add(catBtn); group.add(dogBtn); 
+        group.add(rabbitBtn); group.add(pigBtn);
+
+        birdBtn.addActionListener(this);
+        catBtn.addActionListener(this);
+        dogBtn.addActionListener(this);
+        rabbitBtn.addActionListener(this);
+        pigBtn.addActionListener(this);
+
+        JPanel radioPanel = new JPanel(new GridLayout(5, 1));
+        radioPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        radioPanel.add(birdBtn); radioPanel.add(catBtn); radioPanel.add(dogBtn);
+        radioPanel.add(rabbitBtn); radioPanel.add(pigBtn);
+
+        imageLabel = new JLabel();
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // No images, just draw sketches directly
+        pigIcon = new ImageIcon(drawSketch("Pig", 150, 150));
+        birdIcon = new ImageIcon(drawSketch("Bird", 150, 150));
+        catIcon = new ImageIcon(drawSketch("Cat", 150, 150));
+        dogIcon = new ImageIcon(drawSketch("Dog", 150, 150));
+        rabbitIcon = new ImageIcon(drawSketch("Rabbit", 150, 150));
+
+        pigBtn.setSelected(true);
+        imageLabel.setIcon(pigIcon);
+
+        add(radioPanel, BorderLayout.WEST);
+        add(imageLabel, BorderLayout.CENTER);
+        setVisible(true);
+    }
+
+    // Draws the sketch directly. No file loading at all.
+    private BufferedImage drawSketch(String animal, int w, int h) {
+        BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+        if (animal.equals("Pig")) drawSketchPig(g, w, h);
+        else if (animal.equals("Dog")) drawSketchDog(g, w, h);
+        else if (animal.equals("Rabbit")) drawSketchRabbit(g, w, h);
+        else if (animal.equals("Cat")) drawSketchCat(g, w, h);
+        else if (animal.equals("Bird")) drawSketchBird(g, w, h);
+        
+        g.dispose();
+        return img;
+    }
+
+    private void drawSketchPig(Graphics2D g, int w, int h) {
+        g.setColor(new Color(255, 228, 228, 180));
+        g.fillOval(20, 40, 110, 80); g.fillOval(50, 20, 50, 40);
+        g.setColor(Color.BLACK);
+        g.drawOval(20, 40, 110, 80); g.drawOval(50, 20, 50, 40);
+        g.drawOval(65, 30, 20, 15);
+        g.fillOval(60, 25, 3, 3); g.fillOval(74, 25, 3, 3);
+        g.drawArc(62, 35, 16, 8, 0, -180);
+        g.drawOval(40, 20, 20, 20); g.drawOval(90, 20, 20, 20);
+        g.drawArc(110, 60, 15, 10, 45, 270);
+        g.drawLine(50, 110, 45, 130); g.drawLine(65, 110, 60, 130);
+        g.drawLine(85, 110, 80, 130); g.drawLine(100, 110, 95, 130);
+    }
+
+    private void drawSketchDog(Graphics2D g, int w, int h) {
+        g.setColor(new Color(255, 245, 220, 180));
+        g.fillOval(25, 50, 100, 70); g.fillOval(60, 30, 50, 50);
+        g.setColor(Color.BLACK);
+        g.drawOval(25, 50, 100, 70); g.drawOval(60, 30, 50, 50);
+        g.drawArc(55, 25, 20, 35, 0, 180); g.drawArc(85, 25, 20, 35, 0, 180);
+        g.fillOval(70, 45, 6, 6);
+        g.fillOval(72, 38, 3, 3); g.fillOval(84, 38, 3, 3);
+        g.drawArc(75, 52, 10, 6, 0, -180);
+        g.drawLine(45, 110, 40, 130); g.drawLine(90, 110, 95, 130);
+        g.drawArc(110, 70, 15, 10, -45, 180);
+    }
+
+    private void drawSketchRabbit(Graphics2D g, int w, int h) {
+        g.setColor(new Color(245, 245, 245, 180));
+        g.fillOval(35, 50, 80, 70); g.fillOval(50, 35, 50, 50);
+        g.setColor(Color.BLACK);
+        g.drawOval(35, 50, 80, 70); g.drawOval(50, 35, 50, 50);
+        g.drawOval(60, 15, 12, 40); g.drawOval(78, 15, 12, 40);
+        g.fillOval(62, 50, 3, 3); g.fillOval(78, 50, 3, 3);
+        g.drawArc(68, 58, 10, 6, 0, -180);
+        g.drawOval(70, 55, 4, 3);
+        g.drawOval(45, 100, 20, 15); g.drawOval(85, 100, 20, 15);
+        g.fillOval(105, 70, 8, 8);
+    }
+
+    private void drawSketchCat(Graphics2D g, int w, int h) {
+        g.setColor(new Color(220, 220, 220, 180));
+        g.fillOval(30, 50, 90, 70); g.fillOval(55, 30, 50, 50);
+        g.setColor(Color.BLACK);
+        g.drawOval(30, 50, 90, 70); g.drawOval(55, 30, 50, 50);
+        int[] xEars = {60, 70, 50}; int[] yEars = {25, 30, 40}; g.drawPolygon(xEars, yEars, 3);
+        int[] xEars2 = {90, 100, 80}; int[] yEars2 = {25, 30, 40}; g.drawPolygon(xEars2, yEars2, 3);
+        g.fillOval(68, 45, 3, 3); g.fillOval(82, 45, 3, 3);
+        g.drawLine(75, 52, 75, 58); g.drawArc(70, 55, 10, 6, 0, -180);
+        g.drawOval(73, 50, 3, 2);
+        g.drawArc(115, 60, 20, 30, 0, 270);
+    } 
+
+    private void drawSketchBird(Graphics2D g, int w, int h) {
+        g.setColor(new Color(255, 255, 200, 180));
+        g.fillOval(40, 50, 70, 60); g.fillOval(65, 30, 40, 40);
+        g.setColor(Color.BLACK);
+        g.drawOval(40, 50, 70, 60); g.drawOval(65, 30, 40, 40);
+        int[] beakX = {100, 115, 100}; int[] beakY = {45, 50, 55}; g.drawPolygon(beakX, beakY, 3);
+        g.fillOval(75, 40, 3, 3);
+        g.drawArc(50, 60, 40, 30, 0, 180);
+        g.drawLine(70, 105, 65, 115); g.drawLine(80, 105, 85, 115);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String selectedPet = "";
+        ImageIcon icon = null;
+        if (birdBtn.isSelected()) { selectedPet = "Bird"; icon = birdIcon; }
+        else if (catBtn.isSelected()) { selectedPet = "Cat"; icon = catIcon; }
+        else if (dogBtn.isSelected()) { selectedPet = "Dog"; icon = dogIcon; }
+        else if (rabbitBtn.isSelected()) { selectedPet = "Rabbit"; icon = rabbitIcon; }
+        else if (pigBtn.isSelected()) { selectedPet = "Pig"; icon = pigIcon; }
+        imageLabel.setIcon(icon);
+        JOptionPane.showMessageDialog(this, "You selected: " + selectedPet);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new RadioButtonDemo());
+    }
+}
